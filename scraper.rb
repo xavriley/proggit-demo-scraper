@@ -10,7 +10,7 @@ agent = Mechanize.new
 page = agent.get("http://www.reddit.com/r/programming")
 #
 # # Find somehing on the page using css selectors
-table = page.css('div#siteTable > div.thing').each do |row|
+table = page.search('div#siteTable > div.thing').each do |row|
   rank = row.at('span.rank').text
   score = row.at('div.unvoted div.score.unvoted').text
   domain = row.at('span.domain').text
@@ -18,10 +18,10 @@ table = page.css('div#siteTable > div.thing').each do |row|
 
   # # Write out to the sqlite database using scraperwiki library
   ScraperWiki.save_sqlite(["title"], {
-    rank: rank,
-    score: score,
-    domain: domain,
-    title: title
+    "rank" => rank,
+    "score" => score,
+    "domain" => domain,
+    "title" =>  title
   })
 end
 #
